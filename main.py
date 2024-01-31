@@ -60,7 +60,7 @@ class MyGame(arcade.Window):        #Fonction pour qui contient le code du jeu p
 
         self.la_liste_balle = []        #Une liste pour contenir les balles
         self.la_liste_rectangle = []    #une liste pour les rectangles
-    print('Press space to chansge do dark mode.')
+    print('Press space to change do dark mode.')
     def on_draw(self):
         arcade.start_render()
 
