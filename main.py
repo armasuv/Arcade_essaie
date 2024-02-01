@@ -1,10 +1,14 @@
+#On importe les librairies de random et arcade
 import arcade,random
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 
-COLORS = [arcade.color.AERO_BLUE, arcade.color.CAPRI, arcade.color.AUREOLIN, arcade.color.BRIGHT_GREEN]     #Liste pour lister les couleurs disponibles
-class Balle:            #Une classe pour regrouper toutes les balles
+#Liste pour lister les couleurs disponibles
+COLORS = [arcade.color.AERO_BLUE, arcade.color.CAPRI, arcade.color.AUREOLIN, arcade.color.BRIGHT_GREEN]
+
+#Une classe pour regrouper toutes les balles
+class Balle:
     def __init__(self, pos_x, pos_y):
         self.pos_x = pos_x
         self.pos_y = pos_y
@@ -12,9 +16,13 @@ class Balle:            #Une classe pour regrouper toutes les balles
         self.change_y = random.randint(-5,5)
         self.change_x = random.randint(-5,5)
         self.color = random.choice(COLORS)
-    def draw(self):      #Fonction pour dessiner des balles avec ces régulations
+
+    # Fonction pour dessiner des balles avec ces régulations
+    def draw(self):
         arcade.draw_circle_filled(self.pos_x, self.pos_y, radius=self.rayon, color=self.color)
-    def update(self):           #Fonction pour udpate la position des balles
+
+    # Fonction pour udpate la position des balles
+    def update(self):
         self.pos_x += self.change_x
         self.pos_y += self.change_y
 
@@ -27,7 +35,8 @@ class Balle:            #Une classe pour regrouper toutes les balles
             self.change_y *= -1
         if self.pos_y < 0:
             self.change_y *= -1
-class Rectangle:        #Une classe pour regrouper tous les rectangles
+#Une classe pour regrouper tous les rectangles
+class Rectangle:
     def __init__(self, pos_x, pos_y):
         self.pos_x = pos_x
         self.pos_y = pos_y
@@ -37,9 +46,13 @@ class Rectangle:        #Une classe pour regrouper tous les rectangles
         self.height = random.randint(20,30)
         self.width = random.randint(5, 20)
         self.tilt_angle = random.randint(0,90)
-    def draw(self):     #Fonction pour dessiner le rectangle avec ces régulations
+
+    # Fonction pour dessiner le rectangle avec ces régulations
+    def draw(self):
         arcade.draw_rectangle_filled(self.pos_x, self.pos_y, self.width, self.height, color= self.color, tilt_angle=self.tilt_angle)
-    def update(self):           #Fonction pour udpate la position des rectangles
+
+    # Fonction pour udpate la position des rectangles
+    def update(self):
         self.pos_x += self.change_x
         self.pos_y += self.change_y
         if self.pos_x > SCREEN_WIDTH:
@@ -51,15 +64,19 @@ class Rectangle:        #Une classe pour regrouper tous les rectangles
             self.change_y *= -1
         if self.pos_y < 0:
             self.change_y *= -1
-class MyGame(arcade.Window):        #Fonction pour qui contient le code du jeu principal
+#Fonction pour qui contient le code du jeu principal
+class MyGame(arcade.Window):
     def __init__(self, width, height, title):
 
         super().__init__(width, height, title)
 
         arcade.set_background_color(arcade.color.CADMIUM_RED)
 
-        self.la_liste_balle = []        #Une liste pour contenir les balles
-        self.la_liste_rectangle = []    #une liste pour les rectangles
+        # Une liste pour contenir toutes les balles
+        self.la_liste_balle = []
+
+        # une liste pour tous les rectangles
+        self.la_liste_rectangle = []
     print('Press space to change do dark mode.')
     def on_draw(self):
         arcade.start_render()
@@ -69,20 +86,28 @@ class MyGame(arcade.Window):        #Fonction pour qui contient le code du jeu p
 
         for obj in self.la_liste_rectangle:
             obj.draw()
-    def on_update(self, delta_time: float): #Une mise à jour de la position
+
+    # Une mise à jour de la position
+    def on_update(self, delta_time: float):
         for obj in self.la_liste_balle:
             obj.update()
         for obj in self.la_liste_rectangle:
             obj.update()
-    def on_mouse_press(self, x, y, button, modifiers):  #Fonction qui détécte un appuie du boutton gauche de la souris
+
+    # Fonction qui détécte un appuie du boutton gauche de la souris
+    def on_mouse_press(self, x, y, button, modifiers):
         if button == arcade.MOUSE_BUTTON_LEFT:
             self.la_liste_balle.append(Balle(pos_x = x, pos_y = y))
         if button == arcade.MOUSE_BUTTON_RIGHT:
             self.la_liste_rectangle.append(Rectangle(pos_x = x, pos_y = y))
-    def on_key_press(self, symbol: int, modifiers: int): #Fonction qui détécte un appuie du boutton gauche de la souris
+
+    # Fonction qui détécte un appuie du boutton gauche de la souris
+    def on_key_press(self, symbol: int, modifiers: int):
         if symbol == arcade.key.SPACE:
             arcade.set_background_color(arcade.color.BLACK)
-    def on_key_release(self, symbol: int, modifiers: int):#Fonction qui détécte un appuie du boutton space du keyboard
+
+    # Fonction qui détécte un appuie du boutton space du keyboard
+    def on_key_release(self, symbol: int, modifiers: int):
         if symbol == arcade.key.SPACE:
             arcade.set_background_color(arcade.color.CADMIUM_RED)
 
